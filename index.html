@@ -101,13 +101,13 @@
 
               <h1 class="mb-4">
                 John Heberty <br>
-                <span class="accent-text">Tech Lead </span>
+                <span class="accent-text">Tech Lead & <br/> Dev. Python</span>
               </h1>
 
               <p class="mb-8 mb-mb-8">
-                Olá, <strong style="color: black;" hidden>Prefeitura do Rio de Janeiro!</strong> <strong style="color: black;">viajantes do linkedin</strong>! ✌️ Sejam bem-vindos!!!
+                Olá, <strong id="apresentacao" style="color: black;">viajantes do linkedin</strong>! ✌️ Sejam bem-vindos!!!
                 <br/><br/>
-                Sou <strong style="color: black;">John Heberty</strong>, atuo como <strong style="color: red;">Tech Lead (full-time)</strong> e <strong style="color: red;">Desenvolvedor Python Pleno (part-time)</strong>, apesar de ser formado em <strong style="color: black;">Engenharia de Transportes</strong>.
+                Sou <strong style="color: black;">John Heberty</strong>, atuo como <strong style="color: red;">Tech Lead (full-time)</strong> e <strong style="color: red;">Desenvolvedor Python (part-time)</strong>.
                 <br><br/>
                 Como <strong style="color: red;">Tech Lead</strong>, lidero o desenvolvimento de um <strong style="color: black;">aplicativo de premiação para motoristas</strong>, garantindo um <strong style="color: black;">planejamento sólido</strong> e a adoção das <strong style="color: black;">melhores tecnologias</strong>. Meu foco é assegurar a <strong style="color: black;">qualidade</strong>, <strong style="color: black;">segurança de dados</strong> e uma <strong style="color: black;">experiência intuitiva</strong>, facilitando o acesso às informações na palma da mão. Procuro sempre manter um <strong style="color: black;">clima agradável em equipe</strong>, com foco em atingir os <strong style="color: black;">objetivos dos projetos</strong>.
                 <br><br/>
@@ -1272,6 +1272,44 @@
     </div> -->
 
   </footer>
+
+  <!-- ALETERA APRESENTAÇÃO -->
+  <script>
+    async function getLocation() {
+      try {
+        // Verifica se a API de geolocalização está disponível
+        if (!navigator.geolocation) {
+          console.error("Geolocalização não é suportada pelo navegador.");
+          return;
+        }
+  
+        // Obtém a posição do usuário de forma assíncrona
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+  
+        const { latitude, longitude } = position.coords;
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+  
+        // Faz a requisição para obter os dados de localização
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Erro ao obter dados da localização");
+  
+        const dados = await response.json();
+  
+        // Verifica o estado e altera o texto de apresentação
+        if (dados.address?.state !== "Goiás") {
+          document.querySelector("#apresentacao").textContent = "Prefeitura do Rio de Janeiro!";
+        }
+  
+      } catch (error) {
+        console.log("Erro ao obter localização:", error.message);
+      }
+    }
+    // Chama a função assíncrona
+    getLocation();
+  </script>
+  
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
